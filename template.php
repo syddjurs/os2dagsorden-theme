@@ -1,11 +1,11 @@
 <?php
 /**
- * syddjurs_omega_subtheme
+ * os2dagsorden_theme
  *
  * PHP version 5
  *
  * @category Themes
- * @package  Themes_Syddjurs_Omega_Subtheme
+ * @package  Themes_os2dagsorden_theme
  * @author   Stanislav Kutasevits <stan@bellcom.dk>
  * @license  http://www.gnu.org/copyleft/gpl.html GNU General Public License
  * @file
@@ -25,9 +25,9 @@
  * @param mixed &$variables variables
  * @return none
  */
-function syddjurs_omega_subtheme_preprocess_page(&$variables) 
+function os2dagsorden_theme_preprocess_page(&$variables) 
 {    
-    drupal_add_js(drupal_get_path('theme', 'syddjurs_omega_subtheme') . '/js/syddjurs_omega_subtheme.js');
+    drupal_add_js(drupal_get_path('theme', 'os2dagsorden_theme') . '/js/os2dagsorden_theme.js');
     drupal_add_js('add_show_hide_menu_behaviour();', 'inline');
     drupal_add_js('add_tablet_orientation_listener();', 'inline');
     drupal_add_js('add_indicator_help_text();', 'inline');
@@ -47,8 +47,8 @@ function syddjurs_omega_subtheme_preprocess_page(&$variables)
             $variables['views'] = '';
             
             //adding pagescroll
-	    drupal_add_css(drupal_get_path('theme', 'syddjurs_omega_subtheme') . '/css/pagescroller.skins.css');	    
-	    drupal_add_js(drupal_get_path('theme', 'syddjurs_omega_subtheme') . '/js/jquery.pagescroller.js');
+	    drupal_add_css(drupal_get_path('theme', 'os2dagsorden_theme') . '/css/pagescroller.skins.css');	    
+	    drupal_add_js(drupal_get_path('theme', 'os2dagsorden_theme') . '/js/jquery.pagescroller.js');
 	    drupal_add_js('addPagescroller();', 'inline');
         }
         if ($view->name == 'meeting_details' || $view->name == 'speaking_paper') {
@@ -138,7 +138,7 @@ function syddjurs_omega_subtheme_preprocess_page(&$variables)
  *
  * @return reformatted title
  */
-function syddjurs_omega_subtheme_date_nav_title($params) 
+function os2dagsorden_theme_date_nav_title($params) 
 {
     $granularity = $params['granularity'];
     $view = $params['view'];
@@ -185,7 +185,7 @@ function syddjurs_omega_subtheme_date_nav_title($params)
  *
  * @return reformatted title
  */
-function syddjurs_omega_subtheme_calendar_time_row_heading($vars) 
+function os2dagsorden_theme_calendar_time_row_heading($vars) 
 {
     $start_time = $vars['start_time'];
     $next_start_time = $vars['next_start_time'];
@@ -226,7 +226,7 @@ function syddjurs_omega_subtheme_calendar_time_row_heading($vars)
  *
  * @return none
  */
-function syddjurs_omega_subtheme_form_alter(&$form, &$form_state) {
+function os2dagsorden_theme_form_alter(&$form, &$form_state) {
     if ($form['#id'] == 'views-exposed-form-meetings-search-page') {	
 	$form['from_date']['value']['#date_format'] = 'd-m-Y';
         $form['to_date']['value']['#date_format'] = 'd-m-Y';
@@ -266,7 +266,7 @@ function syddjurs_omega_subtheme_form_alter(&$form, &$form_state) {
  *
  * @return none
  */
-function syddjurs_omega_subtheme_preprocess_html(&$vars) {
+function os2dagsorden_theme_preprocess_html(&$vars) {
     // Setup IE meta tag to force IE rendering mode
     $meta_ie_render_engine = array(
       '#type' => 'html_tag',
@@ -295,7 +295,7 @@ function syddjurs_omega_subtheme_preprocess_html(&$vars) {
     drupal_add_html_head($format_detection, 'format-detection');
 }
 
-function syddjurs_omega_subtheme_menu_local_task($variables) {
+function os2dagsorden_theme_menu_local_task($variables) {
   $link = $variables['element']['#link'];
   $href = explode('/', $link['href']);
   $node = node_load($href[1]);
