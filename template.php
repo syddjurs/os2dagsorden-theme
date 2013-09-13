@@ -43,9 +43,9 @@ function os2dagsorden_theme_preprocess_page(&$variables)
             $variables['views'] = '';
             
             //adding pagescroll
-	    drupal_add_css(drupal_get_path('theme', 'os2dagsorden_theme') . '/css/pagescroller.skins.css');	    
-	    drupal_add_js(drupal_get_path('theme', 'os2dagsorden_theme') . '/js/jquery.pagescroller.js');
-	    drupal_add_js('addPagescroller();', 'inline');
+		    drupal_add_css(drupal_get_path('theme', 'os2dagsorden_theme') . '/css/pagescroller.skins.css');	    
+		    drupal_add_js(drupal_get_path('theme', 'os2dagsorden_theme') . '/js/jquery.pagescroller.js');
+		    drupal_add_js('addPagescroller();', 'inline');
         }
         if ($view->name == 'meeting_details' || $view->name == 'speaking_paper') {
 	    //adding has notes indicator to attachment
@@ -63,48 +63,19 @@ function os2dagsorden_theme_preprocess_page(&$variables)
             drupal_add_js('add_indicator_help_text();', 'inline');
             
             //adding annotation 
-	    drupal_add_js(drupal_get_path('module', 'os2dagsorden_annotator') . '/lib/annotator-full.min.js');	    
-	    //drupal_add_js(drupal_get_path('module', 'os2dagsorden_annotator') . '/lib/touch-plugin/annotator.touch-no-add.min.js');
-	    //drupal_add_js(drupal_get_path('module', 'os2dagsorden_annotator') . '/lib/touch-plugin/annotator.touch.min.js');
-	    drupal_add_js(drupal_get_path('module', 'os2dagsorden_annotator') . '/lib/touch-plugin/annotator.touch-syddjurs.min.js');
-	    drupal_add_js(drupal_get_path('module', 'os2dagsorden_annotator') . '/lib/json2.js');
-	    drupal_add_js(drupal_get_path('module', 'os2dagsorden_annotator') . '/lib/XPath.js');
-	    drupal_add_css(drupal_get_path('module', 'os2dagsorden_annotator') . '/lib/annotator-full.min.css');
-	    drupal_add_css(drupal_get_path('module', 'os2dagsorden_annotator') . '/lib/touch-plugin/annotator.touch.css');
-	    drupal_add_js(drupal_get_path('module', 'os2dagsorden_annotator') . '/js/os2dagsorden_annotator_secure.js');
+		    drupal_add_js(drupal_get_path('module', 'os2dagsorden_annotator') . '/lib/annotator-full.min.js');	    
+		    //drupal_add_js(drupal_get_path('module', 'os2dagsorden_annotator') . '/lib/touch-plugin/annotator.touch-no-add.min.js');
+		    //drupal_add_js(drupal_get_path('module', 'os2dagsorden_annotator') . '/lib/touch-plugin/annotator.touch.min.js');
+		    drupal_add_js(drupal_get_path('module', 'os2dagsorden_annotator') . '/lib/touch-plugin/annotator.touch-syddjurs.min.js');
+		    drupal_add_js(drupal_get_path('module', 'os2dagsorden_annotator') . '/lib/json2.js');
+		    drupal_add_js(drupal_get_path('module', 'os2dagsorden_annotator') . '/lib/XPath.js');
+		    drupal_add_css(drupal_get_path('module', 'os2dagsorden_annotator') . '/lib/annotator-full.min.css');
+		    drupal_add_css(drupal_get_path('module', 'os2dagsorden_annotator') . '/lib/touch-plugin/annotator.touch.css');
+		    drupal_add_js(drupal_get_path('module', 'os2dagsorden_annotator') . '/js/os2dagsorden_annotator_secure.js');
         }
         if ($view->name == 'speaking_paper') {
             //adding expand/collapse behaviour bullet point details view
             drupal_add_js('bullet_point_details_init("'. $base_path .'?q=")', 'inline');
-            $variables['views'] = '';
-
-            //logging access of closed bullet point
-            $nid = arg(3);
-            $bullet_point = node_load(arg(3));
-            if ($bullet_point->field_bul_point_closed['und'][0]['value'] == 1 || $bullet_point->field_bul_point_personal['und'][0]['value'] == 1) {                
-		$user = os2dagsorden_access_helper_get_user();
-		
-                $security_log_dir = explode('/',$_SERVER['DOCUMENT_ROOT']);
-                array_pop($security_log_dir);
-                $security_log_dir = implode('/', $security_log_dir);
-                $security_log_dir .= '/logs';
-              
-                $log = $security_log_dir . '/closed_bullet_point_access.log';
-                
-                $handle = fopen($log, 'a');
-                $data = '[';
-                $data .= date('d-m-Y H:i:s');
-                $data .= ']';
-                $data .= ' ' . $user->name . ' [ID: ' . $user->field_user_id['und'][0]['value'] . ']';
-                $data .= ' [IP: ' . os2dagsorden_access_helper_get_client_ip() . ' ]';
-                $data .= ' accessed closed bullet point [' . $bullet_point->title . ']';
-                $data .= ' url: [' . $_SERVER['REQUEST_URI'] . ']';
-                $data .= PHP_EOL;
-                fwrite($handle, $data);
-            }
-            if ($view->name == 'meetings-search') {
-	      print_r('here');
-            }
         }
     } else if ($variables['page']['content']['content']['content']['system_main']['content']['#attributes']['class'][1] == 'node-speaker_paper-form'){ 
       //in "creating speaker paper"
@@ -119,7 +90,7 @@ function os2dagsorden_theme_preprocess_page(&$variables)
       $breadcrumb[] .= l('Mødedetaljer', 'meeting/' . $destination[1]);
       
       if (isset($destination[3]))//bullet point
-	$breadcrumb[] .= l('Dagsordenspunkt', 'meeting/' . $destination[1] . '/bullet-point/' . $destination[3]);
+	  	$breadcrumb[] .= l('Dagsordenspunkt', 'meeting/' . $destination[1] . '/bullet-point/' . $destination[3]);
 	
       $breadcrumb[] .= '<span class="breadcrumb-active">Opret talepapir</span>';
       drupal_set_breadcrumb($breadcrumb);
