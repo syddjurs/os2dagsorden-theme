@@ -97,7 +97,7 @@ function show_side_menu(){
  * 
  * @url is base url, used to send the parameted to attachment_add_expand_behaviour()
  */
-function bullet_point_add_expand_behaviour(url){
+function bullet_point_add_expand_behaviour(url, massive_bilag_expand){
   var pathname = window.location.pathname;
    jQuery(document).ready(function() {   
 	jQuery(".bullet-point-attachments .view-content .item-list .ul-item-list-dagsordenspunkt").each(function(index) {
@@ -120,8 +120,8 @@ function bullet_point_add_expand_behaviour(url){
 	    }
  	  });
 	  
-	  attachment_add_expand_all_behaviour(this, index, url);  
-	  attachment_add_expand_behaviour(this,index,url);
+	  attachment_add_expand_all_behaviour(this, index, url, massive_bilag_expand);  
+	  attachment_add_expand_behaviour(this,index,url, massive_bilag_expand);
 	  
 	  //reading from local storage
 	  if (JSON.parse(window.localStorage.getItem(pathname + "-attachments_container_"+index)) === true){
@@ -136,11 +136,11 @@ function bullet_point_add_expand_behaviour(url){
  * 
  * @url is base url, used to send the parameted to attachment_add_expand_behaviour()
  */
-function bullet_point_details_init(url){
+function bullet_point_details_init(url, massive_bilag_expand){
   jQuery(document).ready(function() {   
     jQuery(".item-list-dagsordenspunkt .ul-item-list-dagsordenspunkt").each(function(index) {
-	attachment_add_expand_all_behaviour(this, index, url);  
-	attachment_add_expand_behaviour(this, index, url);
+	attachment_add_expand_all_behaviour(this, index, url, massive_bilag_expand);  
+	attachment_add_expand_behaviour(this, index, url, massive_bilag_expand);
     });
   });
 }
@@ -151,19 +151,21 @@ function bullet_point_details_init(url){
  * Also loads the comment of the attachment via Ajax and adds the annotator to it, if these actions has not been done before
  *
  */
-function attachment_add_expand_all_behaviour(bulletPoint, bulletPointIndex, url){
+function attachment_add_expand_all_behaviour(bulletPoint, bulletPointIndex, url, massive_bilag_expand){
   var pathname = window.location.pathname;
   jQuery(bulletPoint).prepend("<input type='button' class='button hide_show_all_attachments_text' id='btn_hide_show_all_attachments_text_"+bulletPointIndex+"' value='⇊'></a>");
   
   jQuery("#btn_hide_show_all_attachments_text_"+bulletPointIndex).click(function(){
     if (jQuery("#btn_hide_show_all_attachments_text_"+bulletPointIndex).val() == "⇊"){
 	jQuery("[id^=attachment_text_container_"+bulletPointIndex+"_]").each(function(index_attachment){
-	  //saving in the local storage
-	  window.localStorage.setItem(pathname + "-attachment_text_container_"+bulletPointIndex+"_"+index_attachment, "true");
-	  jQuery(this).show();
-	  
-	  //handle single expand button
-	  jQuery("#btn_hide_show_attachment_text_"+bulletPointIndex+"_"+index_attachment).val("⇑");
+	  if (massive_bilag_expand || !jQuery(this).children().first().hasClass("attachment_text_trimmed_container")){//skip bilags
+	    //saving in the local storage
+	    window.localStorage.setItem(pathname + "-attachment_text_container_"+bulletPointIndex+"_"+index_attachment, "true");
+	    jQuery(this).show();
+	    
+	    //handle single expand button
+	    jQuery("#btn_hide_show_attachment_text_"+bulletPointIndex+"_"+index_attachment).val("⇑");
+	  }
 	  
 	  attachment_load_content(bulletPointIndex, index_attachment, url);
 	});
@@ -189,7 +191,7 @@ function attachment_add_expand_all_behaviour(bulletPoint, bulletPointIndex, url)
  * 
  * Also calls attachment_load_content
  */
-function attachment_add_expand_behaviour(bulletPoint, bulletPointIndex, url){
+function attachment_add_expand_behaviour(bulletPoint, bulletPointIndex, url, massive_bilag_expand){
   var pathname = window.location.pathname;
   jQuery(bulletPoint).children("li").children(".attachment_text_container").each(function(index_attachment){
     jQuery(this).attr("id","attachment_text_container_"+bulletPointIndex+"_"+index_attachment);
@@ -215,10 +217,22 @@ function attachment_add_expand_behaviour(bulletPoint, bulletPointIndex, url){
       }
       
       //handle expand all
-      if (jQuery("[id^=btn_hide_show_attachment_text_"+bulletPointIndex+"_][value='⇓']").length > 0)
-	jQuery("#btn_hide_show_all_attachments_text_"+bulletPointIndex).val("⇊");
-      else
-	jQuery("#btn_hide_show_all_attachments_text_"+bulletPointIndex).val("⇈");
+      if (massive_bilag_expand){
+	if (jQuery("[id^=btn_hide_show_attachment_text_"+bulletPointIndex+"_][value='⇓']").length > 0)
+	  jQuery("#btn_hide_show_all_attachments_text_"+bulletPointIndex).val("⇊");
+	else
+	  jQuery("#btn_hide_show_all_attachments_text_"+bulletPointIndex).val("⇈");
+      } else {
+	var new_val = "⇈";
+	jQuery("[id^=btn_hide_show_attachment_text_"+bulletPointIndex+"_]").each(function(){
+	  if (jQuery(this).parent().hasClass("non-bilag")){
+	    if (jQuery(this).val() == '⇓'){
+	      new_val = "⇊";
+	    }
+	  }
+	});
+	jQuery("#btn_hide_show_all_attachments_text_"+bulletPointIndex).val(new_val);
+      }
     });
     
     //reading from local storage
