@@ -33,6 +33,9 @@ function os2dagsorden_theme_preprocess_page(&$variables)
     drupal_add_js('add_indicator_help_text();', 'inline');
     drupal_add_js('hide_print_buttons();', 'inline');
     drupal_add_js('resize_listener();', 'inline');
+    if (!os2dagsorden_access_helper_show_byradet_menu()){
+     drupal_add_js('hide_byradet_menu();', 'inline');
+    }
     
     $view = views_get_page_view();
     if (!empty($view)) {
