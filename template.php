@@ -39,7 +39,7 @@ function os2dagsorden_theme_preprocess_page(&$variables)
 	global $base_path;	
         if ($view->name == 'meeting_details') {
             //adding expand/collapse behaviour to meeting details view
-            drupal_add_js('bullet_point_add_expand_behaviour("'. $base_path .'?q=")', 'inline');
+            drupal_add_js('bullet_point_add_expand_behaviour("'. $base_path .'?q=", ' . variable_get('os2dagsorden_expand_attachment', true) . ')', 'inline');
             $variables['views'] = '';
             
             //adding pagescroll
@@ -75,7 +75,7 @@ function os2dagsorden_theme_preprocess_page(&$variables)
         }
         if ($view->name == 'speaking_paper') {
             //adding expand/collapse behaviour bullet point details view
-            drupal_add_js('bullet_point_details_init("'. $base_path .'?q=")', 'inline');
+            drupal_add_js('bullet_point_details_init("'. $base_path .'?q=", ' . variable_get('os2dagsorden_expand_attachment', true) . ')', 'inline');
         }
     } else if ($variables['page']['content']['content']['content']['system_main']['content']['#attributes']['class'][1] == 'node-speaker_paper-form'){ 
       //in "creating speaker paper"
