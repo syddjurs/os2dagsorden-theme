@@ -1492,13 +1492,13 @@ a.annotator-wrapper {
 }
 
 .attachment_text_container .attachment_text_trimmed_container, .attachment_text_container .attachment_full_trimmed_container{
-  max-width: 500px;
+  max-width: 425px;
   position: relative;
 }
 
 .attachment_text_container .attachment-text{
   overflow: hidden;
-  max-width: 500px;
+  max-width: 425px;
 }
 
 .attachment_text_container .attachment_text_full_container, .attachment_text_container .attachment_text_trimmed_container{
