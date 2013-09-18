@@ -13,7 +13,7 @@
     <?php print $print['head']; ?>
     <?php print $print['base_href']; ?>
     <title><?php print $print['title']; ?></title>
-	<script src="<?php print $GLOBALS['base_path'];?>/misc/drupal.js"></script>
+	<script src="<?php print $GLOBALS['base_url'];?>/misc/drupal.js"></script>
     <?php print $print['scripts']; ?>
     <?php print $print['sendtoprinter']; ?>
     <?php print $print['robots_meta']; ?>
