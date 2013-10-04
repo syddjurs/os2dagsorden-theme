@@ -1303,7 +1303,7 @@ a.annotator-wrapper {
     overflow-y: hidden;
 }
 
-.content #pdf-main {
+.content #pdf-main, .content #page-container {
   position: relative;
   background: #BEBEBE;
 }
@@ -1429,12 +1429,12 @@ a.annotator-wrapper {
     text-decoration: none;
 }
 
-.annotator-wrapper #pdf-main {
+.annotator-wrapper #pdf-main, .annotator-wrapper #page-container{
   position: relative;
   background: #BEBEBE;
 }
 
-.attachment_text_container .attachment_text_trimmed_container #pdf-main {
+.attachment_text_container .attachment_text_trimmed_container #pdf-main,  .attachment_text_container .attachment_text_trimmed_container #page-container{
   position: relative;
   background: #BEBEBE;
   overflow: hidden;
